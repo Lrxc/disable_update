@@ -4,11 +4,16 @@
 
 ## macOS
 
-改属主：`on` 改成 `root:wheel`，`off` 改回自己。
+两个版本，功能一样，改的东西不同：
+
+| 脚本 | on | off |
+| --- | --- | --- |
+| `disable_update.sh` | 属主改成 `root:wheel` | 属主改回自己 |
+| `disable_update_v2.sh` | `chmod 000` | `chmod 755` |
 
 ```bash
 ./disable_update.sh on
-./disable_update.sh off
+./disable_update_v2.sh on
 ```
 
 ## Windows
