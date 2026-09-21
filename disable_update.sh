@@ -16,7 +16,7 @@ readonly PATHS=(
 
 # 属主配置
 readonly OWNER_DISABLED="root:wheel"  # 禁用
-readonly OWNER_RESTORED="lrxc:staff" # 恢复
+readonly OWNER_RESTORED="zorch:staff" # 恢复
 
 # 修改属主
 set_owner() {
