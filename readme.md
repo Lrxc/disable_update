@@ -4,17 +4,21 @@
 
 ## macOS
 
-两个版本，功能一样，改的东西不同,推荐v2：
+三个版本，功能一样（挡住更新），改的东西不同：
 
 | 脚本 | on | off |
 | --- | --- | --- |
 | `disable_update.sh` | 属主改成 `root:wheel` | 属主改回自己 |
-| `disable_update_v2.sh` | `chmod 555`（只读） | `chmod 755` |
+| `disable_update_v2.sh` | `chmod 000`（禁读禁写） | `chmod 755` |
+| `disable_update_v3.sh` | `chflags -R uchg`（加锁） | `chflags -R nouchg`（解锁） |
 
 ```bash
 ./disable_update.sh on
 ./disable_update_v2.sh on
+./disable_update_v3.sh on
 ```
+
+v3 用的是 macOS 的**文件锁定标志**，就是 Finder 里的「已锁定」。它和 `chmod` 是两套独立机制 —— 加锁后连 `chmod` 都改不动。推荐 v3。
 
 ## Windows
 
@@ -56,5 +60,7 @@ Windows 的路径是从 macOS 推断的，未在实机验证，请按实际安�
 - macOS 路径用 `$HOME`，不能用 `~`（引号里的 `~` 不展开，会创建名为 `~` 的目录）
 - 跑 `on` 前先退出对应应用，否则目录可能被应用重建
 - 需要 `sudo` / 管理员权限
-- `off` 是固定值（`755` / 重置继承），不会还原成原权限
+- v3 的 `-R` 是递归加锁。只锁目录本身挡不住「改写已有文件」，必须锁到内部
+- v3 加锁后该目录**无法直接 `rm -rf`**，要先 `chflags -R nouchg` 或改用 `sudo rm -rf`
+- `disable_update.sh` 的 `off` 是固定属主，不还原原值；`disable_update_v2.sh` 的 `off` 固定 `755`；Windows 的 `off` 重置为默认继承。三者都不还原自定义设置
 
