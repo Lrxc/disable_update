@@ -26,7 +26,7 @@ set_flag() {
 	for path in "${PATHS[@]}"; do
 		if [ ! -e "$path" ]; then
 			echo "\t新建: $path"
-			sudo mkdir -p "$path"
+			mkdir -p "$path"
 		fi
 		# echo "$action: $path -> $flag"
 		echo "$action: $(realpath "$path") -> $flag"
