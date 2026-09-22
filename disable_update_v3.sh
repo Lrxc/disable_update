@@ -30,7 +30,7 @@ set_flag() {
 		fi
 		# echo "$action: $path -> $flag"
 		echo "$action: $(realpath "$path") -> $flag"
-		sudo chflags -R "$flag" "$path"
+		chflags -R "$flag" "$path"
 	done
 }
 
@@ -57,7 +57,7 @@ main() {
 		;;
 	esac
 
-	sudo -v                    # 先验证密码
+	# sudo -v                    # 先验证密码
 	set_flag "$action" "$flag" # 处理所有路径
 }
 
